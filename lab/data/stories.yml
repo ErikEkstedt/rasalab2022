@@ -1,0 +1,78 @@
+version: "3.1"
+
+stories:
+
+- story: greet and subscribe
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: subscribe
+  - action: newsletter_form
+  - active_loop: newsletter_form
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+  - intent: subscribe
+  - action: newsletter_form
+  - active_loop: newsletter_form
+  - slot_was_set:
+    - requested_slot: email
+  - slot_was_set:
+    - email: abc@company.com
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_subscribed
+  - intent: affirm
+  - action: utter_happy
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: subscribe
+  - action: newsletter_form
+  - active_loop: newsletter_form
+  - slot_was_set:
+    - requested_slot: email
+  - slot_was_set:
+    - email: name@company.com
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_subscribed
+  - intent: affirm
+  - action: utter_happy
+  - intent: goodbye
+  - action: utter_goodbye
